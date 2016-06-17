@@ -10,6 +10,14 @@ var mime = require('mime');
 var bodyParser = require('body-parser');
 var socketio = require('socket.io');
 
+// PSQL stuff
+var pg = require('pg');
+var conString = 'postgres://localhost:5432/twitterfsaworkshop';
+var client = new pg.Client(conString);
+client.connect();
+app.use('/', makesRouter(io,client));
+
+
 // templating boilerplate setup
 app.engine('html', swig.renderFile); // how to render html templates
 app.set('view engine', 'html'); // what file extension do our templates have
